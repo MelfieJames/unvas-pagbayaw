@@ -6,7 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Search, Eye, Award } from "lucide-react"; // Use Award icon
+import { Search, Eye, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import Footer from "@/components/Footer";
@@ -47,7 +47,7 @@ const Achievements = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex flex-col bg-gray-100">
+      <div className="min-h-screen flex flex-col">
         <Navbar />
         <div className="pt-20 container mx-auto flex-grow text-center">
           <h1 className="text-4xl font-semibold text-gray-800">Achievements</h1>
@@ -67,7 +67,7 @@ const Achievements = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <Navbar />
       <div className="container mx-auto pt-24 px-4 flex-grow">
         {/* Header with Icon */}
