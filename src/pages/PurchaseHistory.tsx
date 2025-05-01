@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useQuery } from "@tanstack/react-query";
@@ -11,8 +10,9 @@ import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export default function PurchaseHistory() {
+export default function ProfilePage() {
   const { user } = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -23,8 +23,7 @@ export default function PurchaseHistory() {
 
       const { data, error } = await supabase
         .from('purchases')
-        .select(`
-          *,
+        .select(`*,
           purchase_items(
             *,
             products(*)
@@ -41,10 +40,10 @@ export default function PurchaseHistory() {
 
   const filteredPurchases = purchases.filter(purchase => {
     if (!searchTerm) return true;
-    
+
     // Search by purchase ID
     if (purchase.id.toString().includes(searchTerm)) return true;
-    
+
     // Search by product name
     return purchase.purchase_items?.some(item => 
       item.products?.product_name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -68,6 +67,7 @@ export default function PurchaseHistory() {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       <div className="container mx-auto px-4 pt-20">
+        {/* Purchase History Section */}
         <h1 className="text-3xl font-bold mb-6 flex items-center gap-2">
           <ShoppingBag className="h-6 w-6" /> Purchase History
         </h1>
@@ -100,7 +100,7 @@ export default function PurchaseHistory() {
                 <CardHeader className="bg-gray-50 border-b pb-3">
                   <div className="flex flex-wrap items-center justify-between">
                     <CardTitle className="text-lg font-medium flex items-center gap-1">
-                      <ShoppingBag className="h-4 w-4" /> 
+                      <ShoppingBag className="h-4 w-4" />
                       Order #{purchase.id}
                     </CardTitle>
                     <div className="flex items-center gap-3">
@@ -140,7 +140,6 @@ export default function PurchaseHistory() {
                       <span className="text-sm text-gray-500">Total</span>
                       <div className="font-bold">₱{Number(purchase.total_amount).toFixed(2)}</div>
                     </div>
-                    <Button size="sm">View Details</Button>
                   </div>
                 </CardContent>
               </Card>
